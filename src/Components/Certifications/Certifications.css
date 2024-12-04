@@ -1,0 +1,142 @@
+.certifications-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: #333;
+}
+
+.certifications-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.certifications-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.certifications-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+}
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.certification-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.certification-card:hover {
+  background: transparent;
+  border-color: #4db5ff;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-primary);
+  border: 2px solid transparent;
+}
+
+.cert-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  background: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #e0e0e0;
+}
+
+.cert-icon svg {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.cert-content h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #333;
+}
+
+.cert-issuer {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.cert-date {
+  font-size: 0.85rem;
+  color: #666;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+.cert-id {
+  font-size: 0.85rem;
+  color: #666;
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+
+.cert-view {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #4db5ff;
+  margin-top: 1rem;
+}
+
+.view-icon {
+  font-size: 1.2rem;
+}
+
+/* Media Queries */
+@media screen and (max-width: 1024px) {
+  .certifications-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .certifications-section {
+    padding: 60px 0;
+  }
+
+  .certifications-title {
+    font-size: 2rem;
+  }
+
+  .certification-card {
+    padding: 1.5rem;
+  }
+}
+
+/* Optional: Add animation for cards */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
