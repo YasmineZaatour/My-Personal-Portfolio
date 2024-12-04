@@ -1,0 +1,47 @@
+.Title {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  padding: 15px 0;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.Title-container {
+    width: 100%;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 60px; /* Add some left margin */
+  }
+
+.Title-logo {
+  text-decoration: none;
+  font-size: 2em;
+  background: linear-gradient(120deg, #69b3a2, #251667);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  letter-spacing: 2px;
+  transition: transform 0.3s ease;
+}
+
+.logo-text:hover {
+  transform: scale(1.05);
+}
+
+::selection {
+  background: #69b3a2;
+  text-shadow: none;
+}
