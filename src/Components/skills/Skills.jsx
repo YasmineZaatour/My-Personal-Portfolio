@@ -1,7 +1,8 @@
 import React from 'react';
 import './Skills.css';
-import { FaPython, FaJava, FaReact, FaDatabase, FaCloud, FaTools } from 'react-icons/fa';
-import { SiR, SiScala, SiApachespark, SiHadoop, SiJavascript, SiPhp, SiPowerbi, SiGit, SiDocker, SiMysql } from 'react-icons/si';
+import { FaPython, FaReact, FaDatabase, FaCloud, FaTools } from 'react-icons/fa';
+import {  SiApachespark } from 'react-icons/si';
+import { FaChartBar } from 'react-icons/fa'
 
 const Skills = () => {
   const skillCategories = [
@@ -31,7 +32,7 @@ const Skills = () => {
     },
     {
       title: "Visualization",
-      icon: <SiPowerbi />,
+      icon: < FaChartBar/>,
       skills: ["Power BI"],
       color: "#6c5ce7"
     },

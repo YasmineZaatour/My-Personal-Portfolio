@@ -14,7 +14,9 @@
 }
 
 /* Remove the .glass class styles as we want a solid professional look */
-
+.navbar-container{
+  gap: 220px;
+}
 .navbar.scrolled {
   padding: 10px 0;  /* Adjusted padding when scrolled */
   height: 55px;     /* Smaller height when scrolled */
@@ -50,7 +52,7 @@
 
 .nav-menu {
   display: flex;
-  gap: 0.5rem;
+  gap: 2.5rem;
   list-style: none;
   margin-left: 120px;
 

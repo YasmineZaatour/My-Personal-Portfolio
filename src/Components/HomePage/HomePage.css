@@ -4,7 +4,7 @@
     rgba(242, 242, 255, 1) 0%,
     rgba(235, 249, 255, 1) 100%
   );
-  padding: 30px 0px 10px 0px;
+  padding: 0px 0px 10px 0px;
 }
 #particles-js {
   width: 100%;
@@ -95,7 +95,7 @@
 }
 
 .home-section {
-  min-height: 100vh;
+  min-height: 90vh;
   position: relative;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   overflow: hidden;
@@ -239,7 +239,9 @@
   opacity: 1;
   bottom: -20px;
 }
-
+.scroll-wrapper{
+  margin-bottom: 50px;
+}
 .scroll-indicator {
   position: absolute;
   bottom: 2rem;
