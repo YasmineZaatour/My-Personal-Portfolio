@@ -1,24 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import Navbar from "./Components/NavBar/NavBar";
+import Home from "./Components/HomePage/HomePage";
+import Intro from "./Components/Intro/Intro";
+import Experience from "./Components/Timeline/Experience";
+import Skills from "./Components/skills/Skills";
+import Portfolio from "./Components/Portfolio/Portfolio";
+import Certifications from "./Components/Certifications/Certifications";
+import Contact from "./Components/Contact/Contact";
+import SignIn from './Components/Admin_Dashboard/SignIn/SignIn';
+import SignUp from './Components/Admin_Dashboard/SignUp/SignUp';
+import "./App.css";
+import Title from "./Components/Admin_Dashboard/Title/Title";
+
+// Portfolio Layout Component
+const PortfolioLayout = () => {
+  return (
+    <>
+      <Navbar />
+      <Home />
+      <Intro />
+      <Skills />
+      <Experience />
+      <Portfolio />
+      <Certifications />
+      <Contact />
+    </>
+  );
+};
+
+// Admin Layout Component
+const AdminLayout = () => {
+  return (
+    <div className="admin-container">
+      <Title />
+      <div className="admin-content">
+        <Routes>
+          <Route path="signin" element={<SignIn />} />
+          <Route path="signup" element={<SignUp />} />
+        </Routes>
+      </div>
+    </div>
+  );
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<PortfolioLayout />} />
+          <Route path="/admin/*" element={<AdminLayout />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
