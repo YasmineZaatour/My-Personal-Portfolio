@@ -9,17 +9,17 @@ import emailjs from 'emailjs-com';
 const Contact = () => {
   const form = useRef();
 
-  const sendEmail = (e) => {
-    e.preventDefault();
-    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_PUBLIC_KEY')
-      .then(() => {
-        e.target.reset();
-        alert('Message sent successfully!');
-      }, (error) => {
-        console.log(error);
-        alert('Failed to send message.');
-      });
-  };
+  //const sendEmail = (e) => { 
+  //e.preventDefault();
+  //  emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_PUBLIC_KEY')
+  //    .then(() => {
+  //      e.target.reset();
+  //      alert('Message sent successfully!');
+  //    }, (error) => {
+  //      console.log(error);
+  //      alert('Failed to send message.');
+  //    });
+ // };
   const [formData, setFormData] = useState({
     name: '',
     email: '',

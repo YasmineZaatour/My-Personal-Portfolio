@@ -3,7 +3,7 @@ import "./HomePage.css";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { IoArrowDownOutline } from "react-icons/io5";
 import "bootstrap/dist/css/bootstrap.min.css";
-import particlesJS from "particles.js";
+// import particlesJS from "particles.js";
 import image from "../../Assets/yasmine-img-rond.png";
 import { Link } from "react-scroll";
 
