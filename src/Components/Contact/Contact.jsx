@@ -4,7 +4,7 @@ import './Contact.css';
 import { MdEmail } from 'react-icons/md';
 import { BsLinkedin, BsGithub } from 'react-icons/bs';
 import { FaHeart } from 'react-icons/fa';
-import emailjs from 'emailjs-com';
+// import emailjs from 'emailjs-com';
 
 const Contact = () => {
   const form = useRef();
