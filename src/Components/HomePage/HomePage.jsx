@@ -2,62 +2,65 @@ import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { IoArrowDownOutline } from "react-icons/io5";
-import "bootstrap/dist/css/bootstrap.min.css";
-// import particlesJS from "particles.js";
 import image from "../../Assets/yasmine-img-rond.png";
 import { Link } from "react-scroll";
 
 const ParticleBackground = () => {
   useEffect(() => {
-    window.particlesJS("particles-js", {
-      particles: {
-        number: { value: 100, density: { enable: true, value_area: 800 } },
-        color: { value: "#6b88e6" },
-        shape: {
-          type: "circle",
-          stroke: { width: 0, color: "#000000" },
+    const loadParticlesJS = async () => {
+      await import("particles.js");
+      window.particlesJS("particles-js", {
+        particles: {
+          number: { value: 100, density: { enable: true, value_area: 800 } },
+          color: { value: "#6b88e6" },
+          shape: {
+            type: "circle",
+            stroke: { width: 0, color: "#000000" },
+          },
+          opacity: {
+            value: 0.5,
+            random: true,
+            animation: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+          },
+          size: {
+            value: 3,
+            random: true,
+            animation: { enable: true, speed: 2, size_min: 0.1, sync: false }
+          },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#6b88e6",
+            opacity: 0.4,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: "none",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+          }
         },
-        opacity: {
-          value: 0.5,
-          random: true,
-          animation: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "bubble" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          },
+          modes: {
+            bubble: { distance: 200, size: 6, duration: 2, opacity: 0.8, speed: 3 },
+            push: { particles_nb: 4 }
+          }
         },
-        size: {
-          value: 3,
-          random: true,
-          animation: { enable: true, speed: 2, size_min: 0.1, sync: false }
-        },
-        line_linked: {
-          enable: true,
-          distance: 150,
-          color: "#6b88e6",
-          opacity: 0.4,
-          width: 1
-        },
-        move: {
-          enable: true,
-          speed: 2,
-          direction: "none",
-          random: false,
-          straight: false,
-          out_mode: "out",
-          bounce: false,
-        }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "bubble" },
-          onclick: { enable: true, mode: "push" },
-          resize: true
-        },
-        modes: {
-          bubble: { distance: 200, size: 6, duration: 2, opacity: 0.8, speed: 3 },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
-    });
+        retina_detect: true
+      });
+    };
+
+    loadParticlesJS();
   }, []);
 
   return <div id="particles-js" className="particles-container" />;
@@ -94,7 +97,6 @@ function HomePage() {
             </p>
 
             <div className="social-links">
-              
               <a href="https://linkedin.com/in/yasminezaatour" className="social-link linkedin">
                 <FaLinkedin />
                 <span className="hover-text">LinkedIn</span>
@@ -103,7 +105,6 @@ function HomePage() {
                 <FaGithub />
                 <span className="hover-text">GitHub</span>
               </a>
-              
             </div>
           </div>
         </div>
