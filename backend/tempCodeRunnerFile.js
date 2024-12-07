@@ -11,9 +11,7 @@ app.use(express.json());
 
 // Routes
 const contactRoutes = require('./routes/contactRoutes');
-const adminRoutes = require('./routes/adminRoutes');
 app.use('/api', contactRoutes);
-app.use('/api/admin', adminRoutes);
 
 // MongoDB Atlas Connection
 mongoose.connect(process.env.MONGODB_URI)

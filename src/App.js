@@ -12,6 +12,7 @@ import SignIn from './Components/Admin_Dashboard/SignIn/SignIn';
 import SignUp from './Components/Admin_Dashboard/SignUp/SignUp';
 import "./App.css";
 import Title from "./Components/Admin_Dashboard/Title/Title";
+import AdminDashboard from "./Components/Admin_Dashboard/AdminDashboard/AdminDashboard";
 
 // Portfolio Layout Component
 const PortfolioLayout = () => {
@@ -38,6 +39,7 @@ const AdminLayout = () => {
         <Routes>
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
         </Routes>
       </div>
     </div>

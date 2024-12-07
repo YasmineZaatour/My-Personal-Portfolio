@@ -1,14 +1,17 @@
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './SignUp.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    username: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -17,9 +20,21 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle sign up logic here
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5001/api/admin/signup', formData);
+      if (response.status === 201) {
+        navigate('/admin/signin');
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+    }
   };
 
   return (
@@ -27,19 +42,18 @@ const SignUp = () => {
       <div className="signup-card">
         <h2>Create Account</h2>
         <p>Please fill in your information</p>
-        
+        {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="form-group">
             <input
               type="text"
-              name="fullName"
-              placeholder="Full Name"
-              value={formData.fullName}
+              name="username"
+              placeholder="Username"
+              value={formData.username}
               onChange={handleChange}
               required
             />
           </div>
-          
           <div className="form-group">
             <input
               type="email"
@@ -50,7 +64,6 @@ const SignUp = () => {
               required
             />
           </div>
-          
           <div className="form-group">
             <input
               type="password"
@@ -61,7 +74,6 @@ const SignUp = () => {
               required
             />
           </div>
-
           <div className="form-group">
             <input
               type="password"
@@ -72,12 +84,10 @@ const SignUp = () => {
               required
             />
           </div>
-          
           <button type="submit" className="signup-button">
             Sign Up
           </button>
         </form>
-        
         <div className="signup-footer">
           <p>Already have an account? <a href="/admin/signin">Sign In</a></p>
         </div>

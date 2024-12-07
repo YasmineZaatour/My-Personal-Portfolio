@@ -1,5 +1,6 @@
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './SignIn.css';
 
 const SignIn = () => {
@@ -7,6 +8,8 @@ const SignIn = () => {
     email: '',
     password: ''
   });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -15,9 +18,19 @@ const SignIn = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle sign in logic here
+    try {
+      const response = await axios.post('http://localhost:5001/api/admin/signin', formData);
+      if (response.status === 200) {
+        // Save the token to local storage or context
+        localStorage.setItem('token', response.data.token);
+        // Redirect to the admin dashboard
+        navigate('/admin/dashboard');
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+    }
   };
 
   return (
@@ -25,7 +38,7 @@ const SignIn = () => {
       <div className="signin-card">
         <h2>Welcome Back</h2>
         <p>Please sign in to continue</p>
-        
+        {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit} className="signin-form">
           <div className="form-group">
             <input
@@ -37,7 +50,6 @@ const SignIn = () => {
               required
             />
           </div>
-          
           <div className="form-group">
             <input
               type="password"
@@ -48,12 +60,10 @@ const SignIn = () => {
               required
             />
           </div>
-          
           <button type="submit" className="signin-button">
             Sign In
           </button>
         </form>
-        
         <div className="signin-footer">
           <p>Don't have an account? <a href="/admin/signup">Sign Up</a></p>
         </div>
