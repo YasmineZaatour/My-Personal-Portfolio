@@ -36,7 +36,7 @@ const Intro = () => {
               </p>
               
               <p className="animate-text">
-                I'm eager to keep learning, growing, and making a positive impact through the power of data. 🌟
+                I'm eager to keep learning, growing, and making a positive impact through the power of data! 🌟
               </p>
             </div>
 
