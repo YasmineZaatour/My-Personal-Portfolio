@@ -13,6 +13,8 @@ import SignUp from './Components/Admin_Dashboard/SignUp/SignUp';
 import "./App.css";
 import Title from "./Components/Admin_Dashboard/Title/Title";
 import AdminDashboard from "./Components/Admin_Dashboard/AdminDashboard/AdminDashboard";
+import { AuthProvider } from "./Contexts/AuthContext";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 // Portfolio Layout Component
 const PortfolioLayout = () => {
@@ -39,7 +41,14 @@ const AdminLayout = () => {
         <Routes>
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
-          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route 
+            path="dashboard" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </div>
     </div>
@@ -48,14 +57,16 @@ const AdminLayout = () => {
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<PortfolioLayout />} />
-          <Route path="/admin/*" element={<AdminLayout />} />
-        </Routes>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<PortfolioLayout />} />
+            <Route path="/admin/*" element={<AdminLayout />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

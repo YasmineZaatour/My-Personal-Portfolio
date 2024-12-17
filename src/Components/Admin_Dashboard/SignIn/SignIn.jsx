@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { auth } from '../../../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import './SignIn.css';
 
 const SignIn = () => {
@@ -21,15 +22,18 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5002/api/admin/signin', formData);
-      if (response.status === 200) {
-        // Save the token to local storage or context
-        localStorage.setItem('token', response.data.token);
-        // Redirect to the admin dashboard
-        navigate('/admin/dashboard');
-      }
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      // Save the user token
+      const token = await userCredential.user.getIdToken();
+      localStorage.setItem('token', token);
+      // Redirect to admin dashboard
+      navigate('/admin/dashboard');
     } catch (error) {
-      setError(error.response.data.message);
+      setError('Invalid email or password');
     }
   };
 

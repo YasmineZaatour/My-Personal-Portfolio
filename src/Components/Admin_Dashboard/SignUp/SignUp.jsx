@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { auth, db } from '../../../firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import './SignUp.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    fullName: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -28,12 +30,24 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5002/api/admin/signup', formData);
-      if (response.status === 201) {
-        navigate('/admin/signin');
-      }
+      // Create user with email and password
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      // Store additional user data in Firestore
+      await setDoc(doc(db, 'users', userCredential.user.uid), {
+        fullName: formData.fullName,
+        email: formData.email,
+        createdAt: new Date().toISOString()
+      });
+
+      // Redirect to sign in page after successful registration
+      navigate('/admin/signin');
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error.message);
     }
   };
 
@@ -47,9 +61,9 @@ const SignUp = () => {
           <div className="form-group">
             <input
               type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
+              name="fullName"
+              placeholder="Full Name"
+              value={formData.fullName}
               onChange={handleChange}
               required
             />
