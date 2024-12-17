@@ -1,0 +1,10 @@
+name = "email-worker"
+main = "src/workers/email-worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+EMAIL_USER = "zaatouryasmine2003@gmail.com"
+
+# Add your domain
+[env.production]
+routes = ["yasminezaatour.com/api/contact"]
