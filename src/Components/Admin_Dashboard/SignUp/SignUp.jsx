@@ -28,7 +28,7 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5001/api/admin/signup', formData);
+      const response = await axios.post('http://localhost:5002/api/admin/signup', formData);
       if (response.status === 201) {
         navigate('/admin/signin');
       }
