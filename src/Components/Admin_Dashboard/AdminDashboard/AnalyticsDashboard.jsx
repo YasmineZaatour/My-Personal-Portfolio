@@ -2,34 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import ReactGA from 'react-ga4';
 
 // Initialize Google Analytics
-ReactGA.initialize('YOUR-GA4-MEASUREMENT-ID');
+ReactGA.initialize('GTM-KJKWHCZP');
 
 const AnalyticsDashboard = () => {
-  const [visitData, setVisitData] = useState([]);
   const [pageViews, setPageViews] = useState([]);
   const [topPages, setTopPages] = useState([]);
   const [buttonClicks, setButtonClicks] = useState([]);
-
-  // Simulated data - replace with real data fetching
-  useEffect(() => {
-    // Simulate visit data
-    const generateVisitData = () => {
-      const data = [];
-      for (let i = 0; i < 7; i++) {
-        data.push({
-          date: new Date(Date.now() - i * 24 * 60 * 60 * 1000).toLocaleDateString(),
-          visits: Math.floor(Math.random() * 100),
-          pageViews: Math.floor(Math.random() * 500)
-        });
-      }
-      setVisitData(data.reverse());
-    };
-    generateVisitData();
-  }, []);
 
   useEffect(() => {
     // Fetch real-time analytics data
@@ -74,8 +56,6 @@ const AnalyticsDashboard = () => {
     const interval = setInterval(fetchAnalyticsData, 300000);
     return () => clearInterval(interval);
   }, []);
-
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
     <div className="analytics-dashboard"> {/* Apply the CSS class */}
