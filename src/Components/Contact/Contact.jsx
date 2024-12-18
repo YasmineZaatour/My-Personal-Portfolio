@@ -33,7 +33,7 @@ const Contact = () => {
     setStatus('sending');
     
     try {
-      const response = await axios.post('https://yasminezaatour.com/api/contact', formData);
+      const response = await axios.post("https://email-worker.yasmine-portfolio.workers.dev/", formData);
       
       if (response.data.success) {
         setStatus('success');
