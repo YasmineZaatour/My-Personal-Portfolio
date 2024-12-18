@@ -6,7 +6,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import ReactGA from 'react-ga4';
 
 // Initialize Google Analytics
-ReactGA.initialize('GTM-KJKWHCZP');
+ReactGA.initialize('G-XX1R1XXFJS');
 
 const AnalyticsDashboard = () => {
   const [pageViews, setPageViews] = useState([]);
