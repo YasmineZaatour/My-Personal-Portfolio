@@ -1,13 +1,14 @@
+// src/Components/Admin_Dashboard/SignUp/SignUp.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import './SignUp.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -37,11 +38,13 @@ const SignUp = () => {
         formData.password
       );
 
-      // Store additional user data in Firestore
-      await setDoc(doc(db, 'users', userCredential.user.uid), {
-        fullName: formData.fullName,
+      // Store admin data in Firestore
+      await setDoc(doc(db, 'admins', userCredential.user.uid), {
+        name: formData.name,
         email: formData.email,
-        createdAt: new Date().toISOString()
+        status: 'Active',
+        createdAt: serverTimestamp(),
+        lastLogin: null
       });
 
       // Redirect to sign in page after successful registration
@@ -54,16 +57,16 @@ const SignUp = () => {
   return (
     <div className="signup-container">
       <div className="signup-card">
-        <h2>Create Account</h2>
-        <p>Please fill in your information</p>
+        <h2>Create Admin Account</h2>
+        <p>Please fill in admin information</p>
         {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="form-group">
             <input
               type="text"
-              name="fullName"
-              placeholder="Full Name"
-              value={formData.fullName}
+              name="name"
+              placeholder="Name"
+              value={formData.name}
               onChange={handleChange}
               required
             />
@@ -99,7 +102,7 @@ const SignUp = () => {
             />
           </div>
           <button type="submit" className="signup-button">
-            Sign Up
+            Create Admin Account
           </button>
         </form>
         <div className="signup-footer">
