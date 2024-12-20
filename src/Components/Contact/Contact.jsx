@@ -24,10 +24,17 @@ const ContactForm = () => {
         (result) => {
           console.log('Email sent successfully:', result.text);
           setStatus('success');
+          form.current.reset();
+          setTimeout(() => {
+            setStatus('idle');
+          }, 5000);
         },
         (error) => {
           console.error('Email sending failed:', error);
           setStatus('error');
+          setTimeout(() => {
+            setStatus('idle');
+          }, 5000);
         }
       );
   };
