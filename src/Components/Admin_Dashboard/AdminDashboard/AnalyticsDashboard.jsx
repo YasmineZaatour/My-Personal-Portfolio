@@ -1,106 +1,134 @@
 import React, { useState, useEffect } from 'react';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
-import ReactGA from 'react-ga4';
-
-// Initialize Google Analytics
-ReactGA.initialize('G-XX1R1XXFJS');
+import { Grid, Paper, Typography } from '@mui/material';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../../firebase'; // Adjust path as needed
+import { 
+  LineChart, Line, XAxis, YAxis, 
+  CartesianGrid, Tooltip, ResponsiveContainer 
+} from 'recharts';
 
 const AnalyticsDashboard = () => {
-  const [pageViews, setPageViews] = useState([]);
-  const [topPages, setTopPages] = useState([]);
-  const [buttonClicks, setButtonClicks] = useState([]);
+  const [visitorData, setVisitorData] = useState([]);
+  const [adminCount, setAdminCount] = useState(0);
+  const [totalVisitors, setTotalVisitors] = useState(0);
+  const [contactCount, setContactCount] = useState(0);
 
   useEffect(() => {
-    // Fetch real-time analytics data
-    const fetchAnalyticsData = async () => {
+    const fetchCounts = async () => {
       try {
-        // Get page views data
-        const viewsData = await ReactGA.get('pageviews');
-        setPageViews(viewsData.rows.map(row => ({
-          date: row[0],
-          views: parseInt(row[1])
-        })));
+        // Fetch admin count
+        const adminsSnapshot = await getDocs(collection(db, 'admins'));
+        setAdminCount(adminsSnapshot.size);
 
-        // Get top pages
-        const pagesData = await ReactGA.get('ga:pageviews', {
-          dimensions: 'ga:pagePath',
-          sort: '-ga:pageviews',
-          'max-results': 5
-        });
-        setTopPages(pagesData.rows.map(row => ({
-          page: row[0],
-          views: parseInt(row[1])
-        })));
-
-        // Get button clicks (requires custom event tracking)
-        const clicksData = await ReactGA.get('ga:totalEvents', {
-          dimensions: 'ga:eventLabel',
-          filters: 'ga:eventCategory==Button',
-          sort: '-ga:totalEvents',
-          'max-results': 5
-        });
-        setButtonClicks(clicksData.rows.map(row => ({
-          button: row[0],
-          clicks: parseInt(row[1])
-        })));
+        // Fetch contacts count
+        const contactsSnapshot = await getDocs(collection(db, 'contacts'));
+        setContactCount(contactsSnapshot.size);
       } catch (error) {
-        console.error('Error fetching analytics data:', error);
+        console.error('Error fetching counts:', error);
       }
     };
 
-    fetchAnalyticsData();
-    // Refresh data every 5 minutes
-    const interval = setInterval(fetchAnalyticsData, 300000);
-    return () => clearInterval(interval);
+    fetchCounts();
+  }, []);
+
+  useEffect(() => {
+    const data = [
+      { date: '18/12 0:00', visitors: 6 },
+      { date: '18/12 13:00', visitors: 3 },
+      { date: '18/12 16:00', visitors: 1 },
+      { date: '18/12 17:00', visitors: 2 },
+      { date: '18/12 18:00', visitors: 2 },
+      { date: '18/12 19:00', visitors: 11 },
+      { date: '19/12 20:15', visitors: 3 },
+      { date: '20/12 11:00', visitors: 6 },
+      { date: '20/12 11:15', visitors: 1 },
+      { date: '20/12 11:45', visitors: 1 },
+      { date: '20/12 14:30', visitors: 2 },
+      { date: '20/12 16:15', visitors: 2 },
+      { date: '20/12 19:45', visitors: 2 },
+      { date: '21/12 9:00', visitors: 3 },
+      { date: '21/12 9:41', visitors: 1 }
+    ];
+    
+    // Calculate total visitors
+    const total = data.reduce((sum, item) => sum + item.visitors, 0);
+    setTotalVisitors(total);
+    setVisitorData(data);
   }, []);
 
   return (
-    <div className="analytics-dashboard"> {/* Apply the CSS class */}
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
-          <Paper sx={{ p: 2, height: 400 }}>
-            <Typography variant="h6">Page Views Over Time</Typography>
-            <ResponsiveContainer width="100%" height="90%">
-              <AreaChart data={pageViews}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Area type="monotone" dataKey="views" stroke="#8884d8" fill="#8884d8" />
-              </AreaChart>
-            </ResponsiveContainer>
-          </Paper>
-        </Grid>
-
+    <div className="analytics-dashboard" style={{ padding: '20px' }}>
+      <Grid container spacing={3} sx={{ mb: 3 }}>
         <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2, height: 400 }}>
-            <Typography variant="h6">Top Pages</Typography>
-            <ResponsiveContainer width="100%" height="90%">
-              <BarChart data={topPages}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="page" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="views" fill="#82ca9d" />
-              </BarChart>
-            </ResponsiveContainer>
+          <Paper sx={{ p: 3, bgcolor: '#e3f2fd' }}>
+            <Typography variant="h6" gutterBottom>
+              Total Visitors
+            </Typography>
+            <Typography variant="h3" component="div">
+              {totalVisitors}
+            </Typography>
           </Paper>
         </Grid>
+        <Grid item xs={12} md={4}>
+          <Paper sx={{ p: 3, bgcolor: '#f3e5f5' }}>
+            <Typography variant="h6" gutterBottom>
+              Total Admins
+            </Typography>
+            <Typography variant="h3" component="div">
+              {adminCount}
+            </Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Paper sx={{ p: 3, bgcolor: '#e8f5e9' }}>
+            <Typography variant="h6" gutterBottom>
+              Contact Messages
+            </Typography>
+            <Typography variant="h3" component="div">
+              {contactCount}
+            </Typography>
+          </Paper>
+        </Grid>
+      </Grid>
 
+      <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Paper sx={{ p: 2, height: 300 }}>
-            <Typography variant="h6">Most Clicked Buttons</Typography>
+          <Paper sx={{ p: 3, height: 800 }}>
+            <Typography variant="h6" gutterBottom>
+              Visitor Growth Over Time
+            </Typography>
             <ResponsiveContainer width="100%" height="90%">
-              <BarChart data={buttonClicks} layout="vertical">
+              <LineChart 
+                data={visitorData}
+                margin={{ top: 5, right: 30, left: 20, bottom: 70 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number"/>
-                <YAxis dataKey="button" type="category"/>
+                <XAxis 
+                  dataKey="date" 
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                  interval={0}
+                  tick={{ fontSize: 12 }}
+                />
+                <YAxis 
+                  label={{ 
+                    value: 'Visitors', 
+                    angle: -90, 
+                    position: 'insideLeft',
+                    style: { textAnchor: 'middle' }
+                  }}
+                />
                 <Tooltip />
-                <Bar dataKey="clicks" fill="#8884d8" />
-              </BarChart>
+                <Line
+                  type="monotone"
+                  dataKey="visitors"
+                  stroke="#2196f3"
+                  strokeWidth={2}
+                  dot={{ r: 4 }}
+                  activeDot={{ r: 8 }}
+                />
+              </LineChart>
             </ResponsiveContainer>
           </Paper>
         </Grid>

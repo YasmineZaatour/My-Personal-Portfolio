@@ -102,7 +102,7 @@ const SignUp = () => {
             />
           </div>
           <button type="submit" className="signup-button">
-            Create Admin Account
+            Sign Up
           </button>
         </form>
         <div className="signup-footer">
