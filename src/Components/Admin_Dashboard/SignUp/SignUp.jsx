@@ -5,6 +5,8 @@ import { auth, db } from '../../../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import './SignUp.css';
+import validateEmail from '../../../utils/emailValidation';
+import { validatePassword } from '../../../utils/passwordValidation';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +16,9 @@ const SignUp = () => {
     confirmPassword: ''
   });
   const [error, setError] = useState('');
+  const [passwordErrors, setPasswordErrors] = useState([]);
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [emailErrors, setEmailErrors] = useState([]);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,10 +26,40 @@ const SignUp = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+
+    // Email validation
+    if (e.target.name === 'email') {
+      const { errors } = validateEmail(e.target.value);
+      setEmailErrors(errors);
+    }
+
+    // Check password validation when password field changes
+    if (e.target.name === 'password') {
+      const { errors, strength } = validatePassword(e.target.value);
+      setPasswordErrors(errors);
+      setPasswordStrength(strength);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate email before submission
+    const { isValid: isEmailValid, errors: emailValidationErrors } = validateEmail(formData.email);
+    if (!isEmailValid) {
+      setEmailErrors(emailValidationErrors);
+      setError('Please fix email validation errors');
+      return;
+    }
+
+    // Validate password before submission
+    const { isValid, errors } = validatePassword(formData.password);
+    if (!isValid) {
+      setPasswordErrors(errors);
+      setError('Please fix password validation errors');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -54,6 +89,13 @@ const SignUp = () => {
     }
   };
 
+  // Helper function to get strength color
+  const getStrengthColor = (strength) => {
+    if (strength < 30) return '#ff0000';
+    if (strength < 60) return '#ffa500';
+    return '#00ff00';
+  };
+
   return (
     <div className="signup-container">
       <div className="signup-card">
@@ -80,6 +122,16 @@ const SignUp = () => {
               onChange={handleChange}
               required
             />
+            {/* Email validation errors */}
+            {emailErrors.length > 0 && (
+              <ul className="validation-errors">
+                {emailErrors.map((error, index) => (
+                  <li key={index} style={{ color: '#ff0000', fontSize: '12px' }}>
+                    {error}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className="form-group">
             <input
@@ -90,6 +142,29 @@ const SignUp = () => {
               onChange={handleChange}
               required
             />
+            {/* Password strength indicator */}
+            {formData.password && (
+              <div className="password-strength" style={{ marginTop: '5px' }}>
+                <div 
+                  style={{
+                    height: '4px',
+                    width: `${passwordStrength}%`,
+                    backgroundColor: getStrengthColor(passwordStrength),
+                    transition: 'all 0.3s'
+                  }}
+                />
+              </div>
+            )}
+            {/* Password validation errors */}
+            {passwordErrors.length > 0 && (
+              <ul className="password-errors">
+                {passwordErrors.map((error, index) => (
+                  <li key={index} style={{ color: '#ff0000', fontSize: '12px' }}>
+                    {error}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className="form-group">
             <input
