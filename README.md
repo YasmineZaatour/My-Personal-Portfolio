@@ -4,8 +4,8 @@ A modern, responsive portfolio website built with React.js showcasing my project
 
 <div align="center">
   <h3>Desktop View</h3>
-  <img src="./src/Assets/pc-portfolio.png" alt="Desktop Portfolio View" width="800"/>
+  <img src="./src/Assets/Image1.png" alt="Desktop Portfolio View" width="800"/>
   
   <h3>Mobile View</h3>
-  <img src="./src/Assets/mobile-portfolio.png" alt="Mobile Portfolio View" width="300"/>
+  <img src="./src/Assets/Image2.png" alt="Mobile Portfolio View" width="300"/>
 </div>
