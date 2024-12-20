@@ -15,6 +15,7 @@ import Title from "./Components/Admin_Dashboard/Title/Title";
 import AdminDashboard from "./Components/Admin_Dashboard/AdminDashboard/AdminDashboard";
 import { AuthProvider } from "./Contexts/AuthContext";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import AdminVerification from "./Components/Admin_Dashboard/AdminVerification/AdminVerification";
 
 // Portfolio Layout Component
 const PortfolioLayout = () => {
@@ -41,6 +42,7 @@ const AdminLayout = () => {
         <Routes>
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="admin-verification" element={<AdminVerification />} />
           <Route 
             path="dashboard" 
             element={

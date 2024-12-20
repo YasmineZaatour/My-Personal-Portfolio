@@ -40,8 +40,11 @@ const SignIn = () => {
       localStorage.setItem('token', token);
       
       // Redirect to admin dashboard
-      navigate('/admin/dashboard');
+      navigate('/admin/admin-verification',{
+        state:{ email: formData.email}
+      });
     } catch (error) {
+      console.error('Sign in error:',error);
       setError('Invalid email or password');
     }
   };

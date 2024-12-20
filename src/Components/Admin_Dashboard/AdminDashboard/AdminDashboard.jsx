@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -14,6 +15,18 @@ import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminAuthenticated');
+    navigate('/admin/login'); 
+  };
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem('adminAuthenticated');
+    if (!isAuthenticated) {
+      navigate('/admin/login'); 
+    }
+  }, [navigate]);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
@@ -26,11 +39,11 @@ const AdminDashboard = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Box sx={{ my: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center',mt :"100px" }}>
+        <Box sx={{ my: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: "100px" }}>
           <Typography variant="h4" component="h1">
             Admin Dashboard
           </Typography>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={handleLogout}>
             Logout
           </Button>
         </Box>
