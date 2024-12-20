@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './AdminVerification.css';
 
@@ -6,12 +6,16 @@ const AdminVerification = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const email = location.state?.email;
+  const mounted = useRef(false);
 
   const [verificationCode, setVerificationCode] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (mounted.current) return;
+    mounted.current = true;
+
     const sendVerificationCode = async () => {
       if (!email) {
         console.error('No email provided - redirecting to login');
