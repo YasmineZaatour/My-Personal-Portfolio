@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import { motion } from 'framer-motion';
 import AnalyticsDashboard from './AnalyticsDashboard';
 import AdminManagement from './AdminManagement';
+import UsersEmails from './UsersEmails';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -38,11 +39,13 @@ const AdminDashboard = () => {
           <Tabs value={activeTab} onChange={handleTabChange}>
             <Tab label="Analytics" />
             <Tab label="Admin Management" />
+            <Tab label="User Messages" />
           </Tabs>
 
           <Box sx={{ p: 3 }}>
             {activeTab === 0 && <AnalyticsDashboard />}
             {activeTab === 1 && <AdminManagement />}
+            {activeTab === 2 && <UsersEmails />}
           </Box>
         </Paper>
       </motion.div>
