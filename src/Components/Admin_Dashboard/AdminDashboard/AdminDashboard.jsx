@@ -12,21 +12,43 @@ import AnalyticsDashboard from './AnalyticsDashboard';
 import AdminManagement from './AdminManagement';
 import UsersEmails from './UsersEmails';
 import './AdminDashboard.css';
+import { auth } from '../../../firebase';
+import { signOut } from 'firebase/auth';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminAuthenticated');
-    navigate('/admin/login'); 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      localStorage.removeItem('adminAuthenticated');
+      navigate('/admin/signin', { replace: true });
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
+
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('adminAuthenticated');
     if (!isAuthenticated) {
-      navigate('/admin/login'); 
+      navigate('/admin/signin', { replace: true });
     }
   }, [navigate]);
+
+  useEffect(() => {
+    const preventBackNavigation = (e) => {
+      e.preventDefault();
+      window.history.forward();
+    };
+
+    window.history.pushState(null, null, window.location.pathname);
+    window.addEventListener('popstate', preventBackNavigation);
+
+    return () => {
+      window.removeEventListener('popstate', preventBackNavigation);
+    };
+  }, []);
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
