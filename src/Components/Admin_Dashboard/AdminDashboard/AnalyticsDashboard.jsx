@@ -40,14 +40,13 @@ const AnalyticsDashboard = () => {
       { date: '18/12 18:00', visitors: 2 },
       { date: '18/12 19:00', visitors: 11 },
       { date: '19/12 20:15', visitors: 3 },
-      { date: '20/12 11:00', visitors: 6 },
+      { date: '20/12 11:00', visitors: 4 },
       { date: '20/12 11:15', visitors: 1 },
       { date: '20/12 11:45', visitors: 1 },
       { date: '20/12 14:30', visitors: 2 },
       { date: '20/12 16:15', visitors: 2 },
       { date: '20/12 19:45', visitors: 2 },
-      { date: '21/12 9:00', visitors: 3 },
-      { date: '21/12 9:41', visitors: 1 }
+      { date: '21/12 9:00', visitors: 1 },
     ];
     
     // Calculate total visitors
